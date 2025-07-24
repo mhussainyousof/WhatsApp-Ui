@@ -19,28 +19,30 @@ class StatusScreen extends StatelessWidget {
       "statustime":"1 hr ago"
     },
   ];
+
+  StatusScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             UiHelper.CustomText(text: "Status", height: 20)
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         ListTile(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 5),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 5),
             child: Stack(
               children:[ CircleAvatar(
                 radius: 25,
@@ -62,7 +64,7 @@ class StatusScreen extends StatelessWidget {
           title: UiHelper.CustomText(text: "My Status", height: 20),
           subtitle: UiHelper.CustomText(text: "Tap to add status update", height: 15),
         ),
-        SizedBox(height: 20,),
+        const SizedBox(height: 20,),
         Padding(
           padding: const EdgeInsets.only(left: 20,right: 20),
           child: Row(
@@ -70,10 +72,10 @@ class StatusScreen extends StatelessWidget {
             children: [
 
             UiHelper.CustomText(text: "Recent updates", height: 15),
-            Icon(Icons.arrow_drop_down,color: Color(0XFF5E5E5E),)
+            const Icon(Icons.arrow_drop_down,color: Color(0XFF5E5E5E),)
           ],),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Expanded(
           child: ListView.builder(itemBuilder: (context,index){
             return ListTile(

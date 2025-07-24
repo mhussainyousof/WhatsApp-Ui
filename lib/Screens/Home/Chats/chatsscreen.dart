@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 import '../Contact/contactscreen.dart';
@@ -23,6 +25,14 @@ class ChatsScreen extends StatelessWidget {
     },
     {
       "images":
+          "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753337065/2496097_j89oph.png",
+      "name": "LinkedIn",
+      "lastmsg": "We just saw your profile and went… wow, just wow🔥",
+      "time": "10:23 AM",
+      "msg": ""
+    },
+    {
+      "images":
           "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753182655/1610430611248_kdrvcy.jpg",
       "name": "Dane Mackier",
       "lastmsg": "yes, flutter is awesome",
@@ -37,19 +47,11 @@ class ChatsScreen extends StatelessWidget {
       "time": "05:45 PM",
       "msg": "0"
     },
-    // {
-    //   "images":
-    //       "https://images.healthshots.com/healthshots/en/uploads/2020/12/08182549/positive-person.jpg",
-    //   "name": "Aron1",
-    //   "lastmsg": "Flutter",
-    //   "time": "06:45 AM",
-    //   "msg": "1"
-    // },
     {
       "images":
           "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753182655/1681645758739_yrrvrn.jpg",
       "name": "Junaid Jameel",
-      "lastmsg": "Out meeting is today.",
+      "lastmsg": "Our meeting is today.",
       "time": "12:00 PM",
       "msg": "1"
     },
@@ -92,12 +94,23 @@ class ChatsScreen extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: CircleAvatar(
-                      radius: 40,
-                      backgroundImage:
-                      
+                    contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    leading: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: index == 2 ? Border.all(color: const Color(0xFF25D366), width: 2) : null
+                      ),
 
-                          NetworkImage(arrContent[index]["images"].toString()),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: arrContent[index]["images"].toString(),
+                          fit: BoxFit.cover,
+                           placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          
+                          ),
+                      ),
                     ),
                     title: UiHelper.CustomText(
                         text: arrContent[index]["name"].toString(),
@@ -112,7 +125,7 @@ class ChatsScreen extends StatelessWidget {
                       children: [
                         UiHelper.CustomText(
                           text: arrContent[index]["time"].toString(),
-                          height: 12,
+                          height: 10,
                           color:
                               arrContent[index]["msg"].toString().isNotEmpty &&
                                       arrContent[index]["msg"].toString() != "0"
@@ -126,12 +139,12 @@ class ChatsScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 35),
                             child: CircleAvatar(
-                              radius: 10,
+                              radius: 9,
                               backgroundColor:
                                   const Color.fromARGB(255, 10, 160, 15),
                               child: UiHelper.CustomText(
                                 text: arrContent[index]["msg"].toString(),
-                                height: 12,
+                                height: 11,
                                 color: const Color(0XFFFFFFFF),
                               ),
                             ),
@@ -145,16 +158,15 @@ class ChatsScreen extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: GestureDetector(
-          onTap: () {
-            Navigator.push(context,
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+           Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ContactScreen()));
-          },
-          child: CircleAvatar(
-            radius: 30,
-            backgroundColor: const Color(0XFF008665),
-            child: Image.asset("assets/images/mode_comment_black_24dp 1.png"),
-          ),
-        ));
+        },
+        backgroundColor: const Color.fromARGB(255, 13, 158, 18),
+        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(15) ),
+        child: const Icon(Iconsax.message_add_15, color: Colors.white),
+      ),
+        );
   }
 }

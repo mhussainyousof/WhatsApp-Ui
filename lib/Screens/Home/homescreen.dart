@@ -122,12 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
     BottomNavigationBarItem(icon: Icon(Iconsax.call), label: 'Calls'),
   ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 13, 158, 18),
-        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(15) ),
-        child: const Icon(Iconsax.message_add_15, color: Colors.white),
-      ),
+      
     );
   }
 }
