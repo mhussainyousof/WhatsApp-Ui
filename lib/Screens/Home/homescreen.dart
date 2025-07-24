@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           "WhatsApp",
           style: TextStyle(
-            color: Color(0XFF25D366),
+            color: Color.fromARGB(255, 7, 156, 62),
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),
