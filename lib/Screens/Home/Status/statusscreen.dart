@@ -37,6 +37,7 @@ class StatusScreen extends StatelessWidget {
             UiHelper.CustomText(text: "Status", height: 20)
           ],
         ),
+        //sized box
         const SizedBox(
           height: 10,
         ),
