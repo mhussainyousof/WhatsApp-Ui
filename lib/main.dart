@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_series/Screens/Login/loginscreen.dart';
-
 import 'Screens/Home/homescreen.dart';
-import 'Screens/Splash/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
