@@ -94,14 +94,16 @@ class ContactScreen extends StatelessWidget{
       "status":"Cool"
     }
   ];
+
+  ContactScreen({super.key});
   @override
   Widget build(BuildContext context) {
    return Scaffold(
      appBar: AppBar(
        title: UiHelper.CustomText(text: "Select Contact", height: 16,color: Colors.white),
        actions: [
-         IconButton(onPressed: (){}, icon: Icon(Icons.search)),
-         IconButton(onPressed: (){}, icon: Icon(Icons.more_vert_sharp))
+         IconButton(onPressed: (){}, icon: const Icon(Icons.search)),
+         IconButton(onPressed: (){}, icon: const Icon(Icons.more_vert_sharp))
        ],
      ),
      body: ListView.builder(itemBuilder: (context,index){
@@ -109,7 +111,7 @@ class ContactScreen extends StatelessWidget{
          leading: CircleAvatar(
            backgroundImage: NetworkImage(contactContent[index]["img"].toString()),
          ),
-         title: UiHelper.CustomText(text: contactContent[index]["name"].toString(), height: 16,fontweight: FontWeight.bold,color: Color(0XFF000000)),
+         title: UiHelper.CustomText(text: contactContent[index]["name"].toString(), height: 16,fontweight: FontWeight.bold,color: const Color(0XFF000000)),
          subtitle: UiHelper.CustomText(text: contactContent[index]["status"].toString(), height: 14),
        );
      },itemCount: contactContent.length,),

@@ -63,22 +63,6 @@ class ChatsScreen extends StatelessWidget {
       "time": "11:04 AM",
       "msg": ""
     },
-    // {
-    //   "images":
-    //       "https://images.healthshots.com/healthshots/en/uploads/2020/12/08182549/positive-person.jpg",
-    //   "name": "Aron1",
-    //   "lastmsg": "Flutter",
-    //   "time": "06:45 am",
-    //   "msg": "1"
-    // },
-    // {
-    //   "images":
-    //       "https://digitalnectar.in/wp-content/uploads/2024/04/banner-right-img.webp",
-    //   "name": "WSCUBETECH",
-    //   "lastmsg": "Flutter Batch is Starting",
-    //   "time": "07:45 am",
-    //   "msg": "2"
-    // }
   ];
 
   ChatsScreen({super.key});
