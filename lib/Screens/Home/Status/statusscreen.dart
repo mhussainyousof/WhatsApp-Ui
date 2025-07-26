@@ -292,7 +292,7 @@ class StatusScreen extends StatelessWidget {
 
             const Divider(),
 
-            // Suggested Channels
+            //! Suggested Channels
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text("Find channels to follow",
@@ -314,10 +314,12 @@ class StatusScreen extends StatelessWidget {
                   subtitle: Text(channel["followers"]!),
                   trailing: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        backgroundColor: const Color.fromARGB(255, 143, 229, 146),
                         foregroundColor: Colors.white),
                     onPressed: () {},
-                    child: const Text("Follow"),
+                    child: UiHelper.CustomText(text: 'Follow', height: 12, color: const Color.fromARGB(255, 20, 41, 78), fontweight: FontWeight.bold),
                   ),
                 );
               },
