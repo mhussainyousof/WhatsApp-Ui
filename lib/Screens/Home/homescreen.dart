@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:whatsapp_series/Screens/Home/Calls/callsscreen.dart';
 import 'package:whatsapp_series/Screens/Home/Chats/chatsscreen.dart';
-import 'package:whatsapp_series/Screens/Home/Status/communities/communities.dart';
+import 'package:whatsapp_series/Screens/Home/communities/communities.dart';
 import 'package:whatsapp_series/Screens/Home/Status/statusscreen.dart';
 
 class HomeScreen extends StatefulWidget {

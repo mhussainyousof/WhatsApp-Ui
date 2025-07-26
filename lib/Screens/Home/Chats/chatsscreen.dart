@@ -71,13 +71,14 @@ class ChatsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: const Text(
           "WhatsApp",
           style: TextStyle(
             color: Color.fromARGB(255, 7, 156, 62),
             fontWeight: FontWeight.bold,
-            fontSize: 22,
+            fontSize: 20,
           ),
         ),
         actions: [
@@ -89,10 +90,84 @@ class ChatsScreen extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.search, color: Colors.black87),
           ),
-          IconButton(
-            onPressed: () {},
+          PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: Colors.black87),
-          ),
+            onSelected: (value) {
+              debugPrint("Selected: $value");
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'new_group',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.user_add, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('New group'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'new_community',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.people, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('New community'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'new_broadcast',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.send_2, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('New broadcast'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'linked_devices',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.monitor, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('Linked devices'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'starred',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.star, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('Starred'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'read_all',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.tick_circle, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('Read all'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'settings',
+                child: Row(
+                  children: [
+                    Icon(Iconsax.setting_2, color: Colors.black54, size: 20),
+                    SizedBox(width: 10),
+                    Text('Settings'),
+                  ],
+                ),
+              ),
+            ],
+          )
         ],
       ),
       body: Column(
@@ -110,7 +185,7 @@ class ChatsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: index == 1
+                        border: index == 1 || index == 3
                             ? Border.all(
                                 color: const Color(0xFF25D366), width: 2)
                             : null),
