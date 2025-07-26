@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CommunitiesScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class CommunitiesScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: false,
+        
         backgroundColor: Colors.white,
         elevation: 0,
         actions: const [
@@ -29,14 +30,17 @@ class CommunitiesScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Illustration Image
-              Image.network(
-                "https://cdn-icons-png.flaticon.com/512/6840/6840478.png",
-                height: 120,
+              //! Illustration Image
+              CachedNetworkImage(imageUrl: "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753510644/photo19976427498_ycezk5.jpg",
+              width: 170,
+              height: 170,
+              placeholder: (context, url) {
+                return const CircularProgressIndicator();
+              },
               ),
               const SizedBox(height: 25),
 
-              // Headline
+              //! Headline
               const Text(
                 "Stay connected with a community",
                 textAlign: TextAlign.center,
@@ -48,7 +52,7 @@ class CommunitiesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-              // Subtext
+              //! Subtext
               const Text(
                 "Communities bring members together in topic-based groups, "
                 "and make it easy to get admin announcements. Any community "
@@ -61,37 +65,35 @@ class CommunitiesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Start your community button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+              //! Start your community button
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0XFF1DAB61),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
                   ),
-                  onPressed: () {},
-                  child: const Text(
-                    "Start your community",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 80 ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Start your community",
+                  style: TextStyle(
+                    fontSize: 14,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Footer
-              const Text(
-                "Tap + on the Chats tab to create a new community.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black54,
+              //! Footer
+              const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  "Tap + on the Chats tab to create a new community.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ],
