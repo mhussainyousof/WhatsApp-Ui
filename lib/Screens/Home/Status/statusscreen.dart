@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 
@@ -74,14 +75,15 @@ class StatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Updates"),
         backgroundColor: Colors.white,
         elevation: 0,
         titleTextStyle: const TextStyle(
           color: Colors.black,
           fontSize: 20,
-          fontWeight: FontWeight.bold,
         ),
         actions: const [
           Icon(Icons.search, color: Colors.black),
@@ -240,6 +242,11 @@ class StatusScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: (){},
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      backgroundColor: const Color(0XFF1DAB61),
+      child: const Icon(Icons.camera_enhance),
       ),
     );
   }

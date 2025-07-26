@@ -41,6 +41,14 @@ class ChatsScreen extends StatelessWidget {
     },
     {
       "images":
+          "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753333906/1612942070030_isyhx0.jpg",
+      "name": "Iqbal Ali Sultani",
+      "lastmsg": "📵 Missed voice call",
+      "time": "11:04 AM",
+      "msg": ""
+    },
+    {
+      "images":
           "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753182656/1720090712577_fz1e6q.jpg",
       "name": "Muhammad Aqsam",
       "lastmsg": "Dane reacted 🌹 to ❤️",
@@ -55,20 +63,13 @@ class ChatsScreen extends StatelessWidget {
       "time": "12:00 PM",
       "msg": "1"
     },
-    {
-      "images":
-          "https://res.cloudinary.com/dqdl8nui0/image/upload/v1753333906/1612942070030_isyhx0.jpg",
-      "name": "Iqbal Ali Sultani",
-      "lastmsg": "📵 Missed voice call",
-      "time": "11:04 AM",
-      "msg": ""
-    },
   ];
 
   ChatsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,

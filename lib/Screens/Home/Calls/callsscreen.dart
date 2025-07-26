@@ -41,17 +41,17 @@ class CallsScreen extends StatelessWidget {
       "calltime": "⇙ Sep 27, 10:20 AM"
     }
   ];
-
   CallsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         title:
-            UiHelper.CustomText(text: 'Calls', height: 18, color: Colors.black),
+            UiHelper.CustomText(text: 'Calls', height: 20, color: Colors.black),
         actions: const [
           Icon(Icons.search, color: Colors.black),
           SizedBox(width: 10),
@@ -60,7 +60,7 @@ class CallsScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 13),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,7 +87,7 @@ class CallsScreen extends StatelessWidget {
                     size: 20,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width:4),
                 UiHelper.CustomText(
                     text: "Add Favorite",
                     height: 15,
