@@ -69,88 +69,117 @@ class ChatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    leading: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: const Text(
+          "WhatsApp",
+          style: TextStyle(
+            color: Color.fromARGB(255, 7, 156, 62),
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.camera_alt_outlined, color: Colors.black87),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search, color: Colors.black87),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.more_vert, color: Colors.black87),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  leading: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: index == 2 ? Border.all(color: const Color(0xFF25D366), width: 2) : null
-                      ),
-
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: arrContent[index]["images"].toString(),
-                          fit: BoxFit.cover,
-                           placeholder: (context, url) => const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => const Icon(Icons.error),
-                          
-                          ),
+                        border: index == 1
+                            ? Border.all(
+                                color: const Color(0xFF25D366), width: 2)
+                            : null),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: arrContent[index]["images"].toString(),
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
-                    title: UiHelper.CustomText(
-                        text: arrContent[index]["name"].toString(),
-                        height: 14,
-                        fontweight: FontWeight.bold),
-                    subtitle: UiHelper.CustomText(
-                        text: arrContent[index]["lastmsg"].toString(),
-                        height: 13,
-                        color: const Color(0XFF889095)),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        UiHelper.CustomText(
-                          text: arrContent[index]["time"].toString(),
-                          height: 10,
-                          color:
-                              arrContent[index]["msg"].toString().isNotEmpty &&
-                                      arrContent[index]["msg"].toString() != "0"
-                                  ? const Color.fromARGB(255, 10, 160,
-                                      15) 
-                                  : Colors.black, // Black when no messages
-                        ),
-                        const SizedBox(height: 10,),
-                        if (arrContent[index]["msg"].toString().isNotEmpty &&
-                            arrContent[index]["msg"].toString() != "0")
-                          Padding(
-                            padding: const EdgeInsets.only(left: 35),
-                            child: CircleAvatar(
-                              radius: 9,
-                              backgroundColor:
-                                  const Color.fromARGB(255, 10, 160, 15),
-                              child: UiHelper.CustomText(
-                                text: arrContent[index]["msg"].toString(),
-                                height: 11,
-                                color: const Color(0XFFFFFFFF),
-                              ),
+                  ),
+                  title: UiHelper.CustomText(
+                      text: arrContent[index]["name"].toString(),
+                      height: 14,
+                      fontweight: FontWeight.bold),
+                  subtitle: UiHelper.CustomText(
+                      text: arrContent[index]["lastmsg"].toString(),
+                      height: 13,
+                      color: const Color(0XFF889095)),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UiHelper.CustomText(
+                        text: arrContent[index]["time"].toString(),
+                        height: 10,
+                        color: arrContent[index]["msg"].toString().isNotEmpty &&
+                                arrContent[index]["msg"].toString() != "0"
+                            ? const Color.fromARGB(255, 10, 160, 15)
+                            : Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      if (arrContent[index]["msg"].toString().isNotEmpty &&
+                          arrContent[index]["msg"].toString() != "0")
+                        Padding(
+                          padding: const EdgeInsets.only(left: 35),
+                          child: CircleAvatar(
+                            radius: 9,
+                            backgroundColor:
+                                const Color.fromARGB(255, 10, 160, 15),
+                            child: UiHelper.CustomText(
+                              text: arrContent[index]["msg"].toString(),
+                              height: 11,
+                              color: const Color(0XFFFFFFFF),
                             ),
                           ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: arrContent.length,
-              ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+              itemCount: arrContent.length,
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
-           Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ContactScreen()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ContactScreen()));
         },
         backgroundColor: const Color.fromARGB(255, 13, 158, 18),
-        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(15) ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: const Icon(Iconsax.message_add_15, color: Colors.white),
       ),
-        );
+    );
   }
 }
