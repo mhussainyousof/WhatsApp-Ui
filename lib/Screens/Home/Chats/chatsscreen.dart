@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whatsapp_series/Screens/chat/chat_page.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 import '../Contact/contactscreen.dart';
@@ -180,6 +181,9 @@ class ChatsScreen extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatsPage(name: arrContent[index]['name']!, imageUrl: arrContent[index]['images']!)));
+                  },
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   leading: Container(
