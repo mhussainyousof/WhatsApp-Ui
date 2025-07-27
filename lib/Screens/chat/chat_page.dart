@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// هر دستگاه باید یک senderId خاص داشته باشه
 /// روی گوشی واقعی می‌تونی بذاری "phone"
 /// روی شبیه‌ساز بذاری "emulator"
-const String currentSender = "phone"; // تغییر بده بسته به دستگاه
+const String currentSender = "phone"; 
 
 class ChatsPage extends StatefulWidget {
   final String name;
