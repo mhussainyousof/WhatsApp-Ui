@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp_series/sender_manager.dart';
 
 
 /// هر دستگاه باید یک senderId خاص داشته باشه
 /// روی گوشی واقعی می‌تونی بذاری "phone"
 /// روی شبیه‌ساز بذاری "emulator"
-const String currentSender = "phone"; 
-
+/// 
 class ChatsPage extends StatefulWidget {
   final String name;
   final String imageUrl;
@@ -18,10 +18,26 @@ class ChatsPage extends StatefulWidget {
 
   @override
   State<ChatsPage> createState() => _ChatsPageState();
+
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+ String currentSender = "unknown"; 
   final TextEditingController _messageController = TextEditingController();
+
+ @override
+  void initState() {
+    super.initState();
+    _loadSender();
+  }
+
+  Future<void> _loadSender() async {
+    final sender = await SenderManager.getSender();
+    setState(() {
+      currentSender = sender;
+    });
+  }
+
 
   /// chatId از اسم مخاطب ساخته می‌شود
   String get chatId => widget.name.toLowerCase().replaceAll(" ", "_");
@@ -116,7 +132,6 @@ class _ChatsPageState extends State<ChatsPage> {
               },
             ),
           ),
-
           /// قسمت تایپ پیام
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -140,6 +155,7 @@ class _ChatsPageState extends State<ChatsPage> {
                   ),
                 ),
                 const SizedBox(width: 8),
+          const SizedBox(height: 100,),
                 FloatingActionButton(
                   mini: true,
                   onPressed: sendMessage,
