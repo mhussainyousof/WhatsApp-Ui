@@ -1,11 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 class SenderManager {
   static const String _keySender = "current_sender";
 
-  /// ذخیره senderId
+  // ذخیره senderId
   static Future<void> setSender(String sender) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keySender, sender);
