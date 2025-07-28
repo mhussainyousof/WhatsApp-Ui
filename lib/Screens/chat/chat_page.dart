@@ -41,10 +41,8 @@ class _ChatsPageState extends State<ChatsPage> {
         .delete();
   }
 
-  /// chatId از اسم مخاطب ساخته می‌شود
   String get chatId => widget.name.toLowerCase().replaceAll(" ", "_");
 
-  /// ارسال پیام به Firestore
   Future<void> sendMessage() async {
     if (_messageController.text.trim().isEmpty) return;
 
@@ -231,7 +229,6 @@ class _ChatsPageState extends State<ChatsPage> {
                               onPressed: () {},
                             ),
                 
-                            /// آیکون دوربین
                             IconButton(
                               icon: const Icon(Iconsax.camera,
                                   color: Colors.grey),
