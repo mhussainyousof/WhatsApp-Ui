@@ -83,7 +83,7 @@ class _ChatsPageState extends State<ChatsPage> {
                 ),
                 CircleAvatar(
                   radius: 18,
-                  backgroundImage: CachedNetworkImageProvider(widget.imageUrl),
+                  backgroundImage: CachedNetworkImageProvider(widget.imageUrl, ),
                 ),
                 const SizedBox(width: 5),
                 UiHelper.CustomText(
@@ -211,8 +211,6 @@ class _ChatsPageState extends State<ChatsPage> {
                                 controller: _messageController,
                                 decoration: InputDecoration(
                                   hintText: "Message",
-                                  // filled: true,
-                                  // fillColor: Colors.grey[200],
                                   contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 10),
                                   border: OutlineInputBorder(
