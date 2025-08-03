@@ -2,11 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Home/homescreen.dart';
 import 'package:whatsapp_series/firebase_options.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:whatsapp_series/Screens/Home/homescreen.dart';
-import 'package:whatsapp_series/firebase_options.dart';
 import 'package:whatsapp_series/sender_manager.dart';
 
 void main() async {
