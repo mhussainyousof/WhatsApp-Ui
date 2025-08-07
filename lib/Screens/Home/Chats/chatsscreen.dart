@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:whatsapp_series/Screens/chat/chat_page.dart';
+import 'package:whatsapp_series/Screens/Home/chat/chat_page.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
+import 'package:whatsapp_series/chat_bloc/chat_bloc.dart';
+import 'package:whatsapp_series/chat_bloc/chat_event.dart';
 
 import '../Contact/contactscreen.dart';
 
@@ -181,8 +184,19 @@ class ChatsScreen extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatsPage(name: arrContent[index]['name']!, imageUrl: arrContent[index]['images']!)));
+                  onTap: () {
+                    final name = arrContent[index]['name']!;
+                    final imageUrl = arrContent[index]['images']!;
+                    final chatId = name.toLowerCase().replaceAll(" ", "_");
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                                  create: (context) => ChatBloc()..add(LoadMessages(chatId)),
+                                  child:
+                                      ChatsPage(name: name, imageUrl: imageUrl),
+                                )));
                   },
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),

@@ -1,9 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whatsapp_series/Widgets/chat_bubble.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp_series/chat_bloc/chat_bloc.dart';
+import 'package:whatsapp_series/chat_bloc/chat_event.dart';
+import 'package:whatsapp_series/chat_bloc/chat_state.dart';
 import 'package:whatsapp_series/sender_manager.dart';
+import 'package:whatsapp_series/service/chat_services.dart';
 
 class ChatsPage extends StatefulWidget {
   final String name;
@@ -32,32 +38,7 @@ class _ChatsPageState extends State<ChatsPage> {
     });
   }
 
-  Future<void> deleteMessage(String messageId) async {
-    await FirebaseFirestore.instance
-        .collection('chats')
-        .doc(chatId)
-        .collection('messages')
-        .doc(messageId)
-        .delete();
-  }
-
   String get chatId => widget.name.toLowerCase().replaceAll(" ", "_");
-
-  Future<void> sendMessage() async {
-    if (_messageController.text.trim().isEmpty) return;
-
-    await FirebaseFirestore.instance
-        .collection('chats')
-        .doc(chatId)
-        .collection('messages')
-        .add({
-      'text': _messageController.text.trim(),
-      'sender': currentSender,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
-
-    _messageController.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +64,9 @@ class _ChatsPageState extends State<ChatsPage> {
                 ),
                 CircleAvatar(
                   radius: 18,
-                  backgroundImage: CachedNetworkImageProvider(widget.imageUrl, ),
+                  backgroundImage: CachedNetworkImageProvider(
+                    widget.imageUrl,
+                  ),
                 ),
                 const SizedBox(width: 5),
                 UiHelper.CustomText(
@@ -129,24 +112,17 @@ class _ChatsPageState extends State<ChatsPage> {
           Column(
             children: [
               Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('chats')
-                      .doc(chatId)
-                      .collection('messages')
-                      .orderBy('timestamp', descending: true)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+                child: 
+                BlocBuilder<ChatBloc, ChatState>(
+                  builder: (context, state) {
+                    if (state is ChatLoading){
+                              return const Center(child: CircularProgressIndicator());
 
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Center(child: Text("No messages yet"));
-                    }
-
-                    final messages = snapshot.data!.docs;
-
+                    } else if (state is ChatLoaded){
+                      final messages = state.messages;
+                      if(messages.isEmpty){
+                        return const Center(child: Text('There is no message yet'),);
+                      }
                     return ListView.builder(
                       reverse: true,
                       itemCount: messages.length,
@@ -155,42 +131,23 @@ class _ChatsPageState extends State<ChatsPage> {
                         final text = msg['text'] ?? '';
                         final isUser = msg['sender'] == currentSender;
 
-                        return Align(
-                          alignment: isUser
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          child: GestureDetector(
-                            onLongPress: () async {
-                              await deleteMessage(msg.id);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                                color: isUser
-                                    ? const Color(0XFFD8FDD2)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(text),
-                            ),
-                          ),
+                        return ChatBubble(
+                          text: text,
+                          isUser: isUser,
+                          onLongPress: () => context.read<ChatBloc>().add( DeleteMessage(messageId: msg['id']))
+                          
+                          // ChatService.deleteMessage(
+                          //     chatId: chatId, messageId: msg.id),
                         );
                       },
                     );
+                    }
+
                   },
-                ),
+                )
               ),
 
-              /// قسمت تایپ پیام
+             
               SafeArea(
                 top: false,
                 child: Row(
@@ -199,13 +156,17 @@ class _ChatsPageState extends State<ChatsPage> {
                       child: Container(
                         margin: const EdgeInsets.all(5),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, ),
+                          horizontal: 8,
+                        ),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(40)),
                         child: Row(
                           children: [
-                            const Icon(Iconsax.emoji_happy, size: 20,),
+                            const Icon(
+                              Iconsax.emoji_happy,
+                              size: 20,
+                            ),
                             Expanded(
                               child: TextField(
                                 controller: _messageController,
@@ -218,7 +179,18 @@ class _ChatsPageState extends State<ChatsPage> {
                                     borderSide: BorderSide.none,
                                   ),
                                 ),
-                                onSubmitted: (_) => sendMessage(),
+                                onSubmitted: (_) async {
+                                  if (_messageController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                    await ChatService.sendMessage(
+                                      chatId: chatId,
+                                      text: _messageController.text,
+                                      sender: currentSender,
+                                    );
+                                    _messageController.clear();
+                                  }
+                                },
                               ),
                             ),
                             IconButton(
@@ -226,7 +198,6 @@ class _ChatsPageState extends State<ChatsPage> {
                                   color: Colors.grey),
                               onPressed: () {},
                             ),
-                
                             IconButton(
                               icon: const Icon(Iconsax.camera,
                                   color: Colors.grey),
@@ -236,13 +207,18 @@ class _ChatsPageState extends State<ChatsPage> {
                         ),
                       ),
                     ),
-                    
                     FloatingActionButton(
                       mini: true,
-                      onPressed: sendMessage,
+                      onPressed: () => ChatService.sendMessage(
+                        chatId: chatId,
+                        text: _messageController.text,
+                        sender: currentSender,
+                      ),
                       backgroundColor: const Color(0XFF1DAB61),
-                      child: const Icon(Icons.send, size: 22,),
-                      
+                      child: const Icon(
+                        Icons.send,
+                        size: 22,
+                      ),
                     ),
                   ],
                 ),
