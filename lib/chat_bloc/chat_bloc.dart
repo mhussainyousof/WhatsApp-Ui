@@ -15,23 +15,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   StreamSubscription? _messagesSubscription;
 
-  void _onLoadMessages(LoadMessages event, Emitter<ChatState> emit) {
+  void _onLoadMessages(LoadMessages event, Emitter<ChatState> emit) async{
     emit(ChatLoading());
 
     _messagesSubscription?.cancel();
 
-    _messagesSubscription = FirebaseFirestore.instance
+   await emit.forEach(
+    FirebaseFirestore.instance
         .collection('chats')
         .doc(event.chatId)
         .collection('messages')
         .orderBy('timestamp', descending: true)
-        .snapshots()
-        .listen((snapshot) {
+        .snapshots(),
+    onData: (snapshot) {
       final messages = snapshot.docs.map((doc) => doc.data()).toList();
-      emit(ChatLoaded(messages));
-    }, onError: (error) {
-      emit(ChatError(error.toString()));
-    });
+      return ChatLoaded(messages);
+    },
+    onError: (error, stackTrace) {
+      return ChatError(error.toString());
+    },
+  );
+
   }
 
   @override
@@ -50,12 +54,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
    Future<void> _onDeleteMessage(DeleteMessage event, Emitter<ChatState> emit) async {
     if (state is ChatLoaded) {
-      // فرض می‌کنیم chatId ذخیره شده یا می‌تونیم از state بگیریم. اگر نه باید پاس بدیم
-      // ساده برای مثال، فرض می‌کنیم chatId رو به متغیر ذخیره کردیم
-      const chatId = "your_chat_id_here"; // باید جایگزین کنی یا مدیریت کنی
+
 
       await ChatService.deleteMessage(
-        chatId: chatId,
+        chatId: event.chatId,
         messageId: event.messageId,
       );
     }

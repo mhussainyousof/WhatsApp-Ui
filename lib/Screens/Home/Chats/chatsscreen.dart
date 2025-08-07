@@ -188,12 +188,12 @@ class ChatsScreen extends StatelessWidget {
                     final name = arrContent[index]['name']!;
                     final imageUrl = arrContent[index]['images']!;
                     final chatId = name.toLowerCase().replaceAll(" ", "_");
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => BlocProvider(
-                                  create: (context) => ChatBloc()..add(LoadMessages(chatId)),
+                                  create: (context) =>
+                                      ChatBloc()..add(LoadMessages(chatId)),
                                   child:
                                       ChatsPage(name: name, imageUrl: imageUrl),
                                 )));

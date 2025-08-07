@@ -134,15 +134,17 @@ class _ChatsPageState extends State<ChatsPage> {
                         return ChatBubble(
                           text: text,
                           isUser: isUser,
-                          onLongPress: () => context.read<ChatBloc>().add( DeleteMessage(messageId: msg['id']))
+                          onLongPress: () => context.read<ChatBloc>().add( DeleteMessage(messageId: msg['id'], chatId: chatId))
                           
-                          // ChatService.deleteMessage(
-                          //     chatId: chatId, messageId: msg.id),
+                         
                         );
                       },
                     );
                     }
-
+                    else if (state is ChatError) {
+                      return Center(child: Text("Error: ${state.message}"));
+                    }
+                    return const SizedBox();
                   },
                 )
               ),
@@ -183,11 +185,8 @@ class _ChatsPageState extends State<ChatsPage> {
                                   if (_messageController.text
                                       .trim()
                                       .isNotEmpty) {
-                                    await ChatService.sendMessage(
-                                      chatId: chatId,
-                                      text: _messageController.text,
-                                      sender: currentSender,
-                                    );
+                                   context.read<ChatBloc>().add(SendMessage(chatId: chatId, text: _messageController.text
+                                      .trim(), sender: currentSender));
                                     _messageController.clear();
                                   }
                                 },
@@ -209,16 +208,31 @@ class _ChatsPageState extends State<ChatsPage> {
                     ),
                     FloatingActionButton(
                       mini: true,
-                      onPressed: () => ChatService.sendMessage(
-                        chatId: chatId,
-                        text: _messageController.text,
-                        sender: currentSender,
-                      ),
-                      backgroundColor: const Color(0XFF1DAB61),
-                      child: const Icon(
-                        Icons.send,
-                        size: 22,
-                      ),
+                      onPressed: () {
+                          final text = _messageController.text.trim();
+                        if (text.isNotEmpty) {
+                          context.read<ChatBloc>().add(
+                            SendMessage(
+                              chatId: chatId,
+                              text: text,
+                              sender: currentSender,
+                            ),
+                          );
+                          _messageController.clear();
+                        }
+                      }
+
+
+                      // => ChatService.sendMessage(
+                      //   chatId: chatId,
+                      //   text: _messageController.text,
+                      //   sender: currentSender,
+                      // ),
+                      // backgroundColor: const Color(0XFF1DAB61),
+                      // child: const Icon(
+                      //   Icons.send,
+                      //   size: 22,
+                      // ),
                     ),
                   ],
                 ),
