@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:whatsapp_series/Widgets/chat_bubble.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:whatsapp_series/chat_bloc/chat_bloc.dart';
 import 'package:whatsapp_series/chat_bloc/chat_event.dart';
 import 'package:whatsapp_series/chat_bloc/chat_state.dart';
 import 'package:whatsapp_series/sender_manager.dart';
-import 'package:whatsapp_series/service/chat_services.dart';
 
 class ChatsPage extends StatefulWidget {
   final String name;
