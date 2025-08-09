@@ -14,28 +14,21 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   StreamSubscription? _messagesSubscription;
-
   void _onLoadMessages(LoadMessages event, Emitter<ChatState> emit) async{
     emit(ChatLoading());
 
     _messagesSubscription?.cancel();
 
    await emit.forEach(
-    FirebaseFirestore.instance
-        .collection('chats')
-        .doc(event.chatId)
-        .collection('messages')
-        .orderBy('timestamp', descending: true)
-        .snapshots(),
-    onData: (snapshot) {
-      final messages = snapshot.docs.map((doc) => doc.data()).toList();
+    ChatService.getMessages(event.chatId),
+    onData: (snapshot) {  
+      final messages = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
       return ChatLoaded(messages);
     },
     onError: (error, stackTrace) {
       return ChatError(error.toString());
-    },
+    },  
   );
-
   }
 
   @override
@@ -54,7 +47,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
    Future<void> _onDeleteMessage(DeleteMessage event, Emitter<ChatState> emit) async {
     if (state is ChatLoaded) {
-
 
       await ChatService.deleteMessage(
         chatId: event.chatId,
