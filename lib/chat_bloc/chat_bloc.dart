@@ -40,14 +40,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
    Future<void> _onSendMessage(SendMessage event, Emitter<ChatState> emit) async {
     await ChatService.sendMessage(
       chatId: event.chatId,
-      text: event.text,
+      text: event.text, 
       sender: event.sender,
     );
   }
 
    Future<void> _onDeleteMessage(DeleteMessage event, Emitter<ChatState> emit) async {
     if (state is ChatLoaded) {
-
       await ChatService.deleteMessage(
         chatId: event.chatId,
         messageId: event.messageId,
